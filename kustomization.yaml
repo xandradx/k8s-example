@@ -12,4 +12,12 @@ patches:
       value: app01.myapp.itmlab.io
   target:
     kind: Ingress
+- patch: |
+    - op: replace
+      path: /spec/replicas
+      value: 3
+  target:
+    kind: Deployment
+    name: app01
+
 
