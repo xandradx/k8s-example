@@ -4,3 +4,12 @@ resources:
 - k8s/01-namespace.yaml
 - k8s/02-deployment.yaml
 - k8s/03-service.yaml
+- k8s/04-ingress.yaml
+patches:
+- patch: |
+    - op: replace
+      path: /spec/rules/0/host
+      value: app01.myapp.itmlab.io
+  target:
+    kind: Ingress
+
