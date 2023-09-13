@@ -26,4 +26,5 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
     kubectl version --client=true
+    echo "Testing login as $(USERNAME) with passwword = ${PASSWORD}"
   displayName: 'Run a multi-line script'
