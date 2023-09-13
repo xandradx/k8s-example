@@ -30,7 +30,6 @@ stages:
 - stage: deploy
   jobs:
   - job: openshift
-    dependsOn: node
     steps: 
     - download: current
       artifact: dist
