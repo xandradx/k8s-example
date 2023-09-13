@@ -23,4 +23,5 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
+    kubectl version --client=true
   displayName: 'Run a multi-line script'
