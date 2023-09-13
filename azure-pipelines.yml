@@ -13,6 +13,8 @@ container: docker.io/nginx:latest
 
 steps:
 
+
+
 - task: KubectlInstaller@0
   inputs:
     kubectlVersion: 'latest'
