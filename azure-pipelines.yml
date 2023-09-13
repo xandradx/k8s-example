@@ -20,13 +20,11 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
-    kubectl version --client=true
-    echo "Testing login as $(USERNAME) with passwword = ${PASSWORD}"
   displayName: 'Run a multi-line script'
 
 
 - script: |
-    oc login -u ${USERNAME} -p ${PASSWORD} ${OS_URL} --insecure-skip-tls-verify=true
+    oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
     oc get co
     
 
