@@ -9,29 +9,33 @@ trigger:
 pool:
   name: Default
 
-container: docker.io/node:latest
+#container: docker.io/node:latest
 
-steps:
-
-
-- script: |
-    git clone https://gitlab.com/Fx62/pokemones.git app
-  displayName: 'Clone Repo'
-
-- script: |
-    cd app
-    npm install
-    npm run build
-  displayName: 'Build App'
-- script: |
-    NAMESPACE=test-app-jandrade2
-    APPNAME=app
-    VERSION=v5
-    oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
-    oc project ${NAMESPACE}||oc new-project ${NAMESPACE}
-    oc new-build --name ${APPNAME} --image-stream=openshift/nginx:1.20-ubi9 --binary --to=${APPNAME}:${VERSION} -o yaml|oc apply -f -
-    oc start-build app/dist  --from-dir dist --follow
-    oc create deployment ${APPNAME} --image=image-registry.svc:5000/${NAMESPACE}/${APPNAME}:${VERSION} --port 8080 -o yaml --dry-run=client|oc apply -f - 
-    oc expose deployment ${APPNAME} -o yaml --dry-run=client   
-    oc expose service ${APPNAME} -o yaml --dry-run=client |oc apply -f -
-  displayName: 'Publish APP'
+stages:
+- stage: build
+  jobs:
+  - job: node
+    container: docker.io/node:latest
+    steps:
+    - script: |
+        git clone https://gitlab.com/Fx62/pokemones.git app
+      displayName: 'Clone Repo'
+    - script: |
+        cd app
+        npm install
+        npm run build
+      displayName: 'Build App'
+  - job: openshift
+    steps: 
+    - script: |
+        NAMESPACE=test-app-jandrade2
+        APPNAME=app
+        VERSION=v5
+        oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
+        oc project ${NAMESPACE}||oc new-project ${NAMESPACE}
+        oc new-build --name ${APPNAME} --image-stream=openshift/nginx:1.20-ubi9 --binary --to=${APPNAME}:${VERSION} -o yaml|oc apply -f -
+        oc start-build app/dist  --from-dir dist --follow
+        oc create deployment ${APPNAME} --image=image-registry.svc:5000/${NAMESPACE}/${APPNAME}:${VERSION} --port 8080 -o yaml --dry-run=client|oc apply -f - 
+        oc expose deployment ${APPNAME} -o yaml --dry-run=client   
+        oc expose service ${APPNAME} -o yaml --dry-run=client |oc apply -f -
+      displayName: 'Publish APP'
