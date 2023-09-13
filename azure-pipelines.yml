@@ -2,9 +2,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 
-- task: KubectlInstaller@0
-  inputs:
-    kubectlVersion: 'latest'
 
 trigger:
 - main
@@ -15,6 +12,11 @@ pool:
 container: docker.io/nginx:latest
 
 steps:
+
+- task: KubectlInstaller@0
+  inputs:
+    kubectlVersion: 'latest'
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
