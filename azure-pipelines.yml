@@ -25,9 +25,13 @@ stages:
         npm install
         npm run build
       displayName: 'Build App'
+    - publish: $(System.DefaultWorkingDirectory)/app/dist
+      artifact: dist 
   - job: openshift
     dependsOn: node
     steps: 
+    - download: current
+      artifact: dist
     - script: |
         NAMESPACE=test-app-jandrade2
         APPNAME=app
@@ -35,7 +39,7 @@ stages:
         oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
         oc new-project ${NAMESPACE} || oc project ${NAMESPACE}
         oc new-build --name ${APPNAME} --image-stream=openshift/nginx:1.20-ubi9 --binary --to=${APPNAME}:${VERSION} -o yaml|oc apply -f -
-        oc start-build ${APPNAME}  --from-dir app/dist --follow
+        oc start-build ${APPNAME}  --from-dir dist --follow
         oc create deployment ${APPNAME} --image=image-registry.svc:5000/${NAMESPACE}/${APPNAME}:${VERSION} --port 8080 -o yaml --dry-run=client|oc apply -f - 
         oc expose deployment ${APPNAME} -o yaml --dry-run=client |oc apply -f  
         oc expose service ${APPNAME} -o yaml --dry-run=client |oc apply -f -
