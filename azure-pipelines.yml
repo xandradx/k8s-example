@@ -25,6 +25,8 @@ stages:
         npm install
         npm run build
       displayName: 'Build App'
+- stage: publish
+  jobs:
   - job: openshift
     steps: 
     - script: |
