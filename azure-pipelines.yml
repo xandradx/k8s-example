@@ -26,6 +26,8 @@ steps:
 - script: |
     oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
     oc get co
+    oc apply -f k8s/ --dry-run=client
+    oc apply -f k8s/ 
     
 
   displayName: 'Run a multi-line script'
