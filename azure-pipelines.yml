@@ -9,7 +9,7 @@ trigger:
 pool:
   name: Default
 
-container: docker.io/nginx
+container: docker.io/nginx:latest
 
 steps:
 - script: echo Hello, world!
