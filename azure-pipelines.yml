@@ -30,7 +30,7 @@ steps:
 
 
 - script: |
-    NAMESPACE=test-app-jandrade
+    NAMESPACE=test-app-jandrade2
     APPNAME=app
     VERSION=v5
     oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
