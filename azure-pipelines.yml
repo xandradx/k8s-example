@@ -9,7 +9,6 @@ trigger:
 pool:
   name: Default
 
-#container: docker.io/node:latest
 
 stages:
 - stage: build
@@ -45,5 +44,6 @@ stages:
         oc rollout status deployment ${APPNAME}
         oc expose deployment ${APPNAME} -o yaml --dry-run=client |oc apply -f -
         oc expose service ${APPNAME} -o yaml --dry-run=client |oc apply -f -
-        oc get route ${APPNAME} -o jsonpath="{.spec.host}" 
+        ROUTE=$(oc get route ${APPNAME} -o jsonpath="{.spec.host}")
+        echo "Check The APP Here: http://${ROUTE}"
       displayName: 'Publish APP'
