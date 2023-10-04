@@ -29,6 +29,7 @@ stages:
 - stage: deploy
   jobs:
   - job: openshift
+    container: registry.redhat.io/openshift4/ose-cli@sha256:303e86e76d23b56c70cc7dec51c9590caac6edff6cbfb691e2dd89842597b18b
     steps: 
     - download: current
       artifact: dist
