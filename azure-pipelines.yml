@@ -17,14 +17,18 @@ stages:
     pool:
       name: 'Azure Pipelines'
     steps:  
+    - script: |
+        git clone https://gitlab.com/Fx62/pokemones.git app
+      displayName: 'Clone Repo'    
     - task: SnykSecurityScan@1
       inputs:
         testType: 'app'
-        targetFile: 'app'
+        targetFile: 'app/'
         severityThreshold: 'high'
         monitorWhen: 'always'
         failOnIssues: true
         organization: 'xandradx'
+      displayName: 'Scan Code'
 
 - stage: build
   jobs:
