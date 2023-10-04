@@ -16,15 +16,15 @@ stages:
   - job: snyk
     pool:
       name: 'Azure Pipelines'
-    container: 
-      image: docker.io/snyk/snyk:ruby-2.5 
-      options: --platform linux/amd64
-    steps:
-    - script: |
-        export SNKYT_TOKEN
-        git clone https://gitlab.com/Fx62/pokemones.git app
-        snyk test app/
-      displayName: 'Clone Repo'
+  - task: SnykSecurityScan@1
+    inputs:
+      testType: 'app'
+      targetFile: 'app'
+      severityThreshold: 'high'
+      monitorWhen: 'always'
+      failOnIssues: true
+      organization: 'xandradx'
+
 - stage: build
   jobs:
   - job: node
