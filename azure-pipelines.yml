@@ -37,6 +37,7 @@ stages:
         NAMESPACE=test-app-jandrade2
         APPNAME=app
         VERSION=v5
+        set +x
         oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
         oc new-project ${NAMESPACE} || oc project ${NAMESPACE}
         oc get is ${APPNAME} && oc new-build --name ${APPNAME} --image-stream=openshift/nginx:1.20-ubi9 --binary --to=${APPNAME}:${VERSION} -o yaml |oc replace -f - || oc new-build --name ${APPNAME} --image-stream=openshift/nginx:1.20-ubi9 --binary --to=${APPNAME}:${VERSION} -o yaml |oc apply -f - 
