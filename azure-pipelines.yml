@@ -15,7 +15,7 @@ stages:
   jobs:
   - job: snyk
     pool:
-      name: x86
+      name: 'Azure Pipelines'
     container: 
       image: docker.io/snyk/snyk:ruby-2.5 
       options: --platform linux/amd64
