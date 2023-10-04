@@ -16,14 +16,15 @@ stages:
   - job: snyk
     pool:
       name: 'Azure Pipelines'
-  - task: SnykSecurityScan@1
-    inputs:
-      testType: 'app'
-      targetFile: 'app'
-      severityThreshold: 'high'
-      monitorWhen: 'always'
-      failOnIssues: true
-      organization: 'xandradx'
+    steps:  
+    - task: SnykSecurityScan@1
+      inputs:
+        testType: 'app'
+        targetFile: 'app'
+        severityThreshold: 'high'
+        monitorWhen: 'always'
+        failOnIssues: true
+        organization: 'xandradx'
 
 - stage: build
   jobs:
