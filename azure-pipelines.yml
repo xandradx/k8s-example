@@ -24,11 +24,11 @@ stages:
       inputs:
         serviceConnectionEndpoint: 'personal'
         testType: 'app'
-        targetFile: 'app/'
         severityThreshold: 'high'
         monitorWhen: 'always'
         failOnIssues: true
         organization: 'xandradx'
+        testDirectory: '$(Build.SourcesDirectory)/app'
       displayName: 'Scan Code'
 
 - stage: build
