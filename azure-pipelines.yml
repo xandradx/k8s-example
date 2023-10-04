@@ -27,7 +27,7 @@ stages:
         severityThreshold: 'high'
         monitorWhen: 'always'
         failOnIssues: true
-        organization: 'xandradx'
+        organization: 'xandradx-k4jGToaGrTise7iv5uhtGE'
         testDirectory: '$(Build.SourcesDirectory)/app'
       displayName: 'Scan Code'
 
