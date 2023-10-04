@@ -14,7 +14,9 @@ stages:
 - stage: test
   jobs:
   - job: snyk
-    container: docker.io/snyk/snyk:ruby-2.5 
+    container: 
+      image: docker.io/snyk/snyk:ruby-2.5 
+      options: --platform linux/amd64
     steps:
     - script: |
         export SNKYT_TOKEN
