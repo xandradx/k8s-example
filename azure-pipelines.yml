@@ -54,9 +54,9 @@ stages:
     - download: current
       artifact: dist
     - script: |
-        NAMESPACE=test-app-jandrade2
-        APPNAME=app
-        VERSION=v5
+        export NAMESPACE=test-app-jandrade2
+        export APPNAME=app
+        export VERSION=v5
         set +x
         oc login ${OS_URL} -u ${USERNAME} -p ${PASSWORD} --insecure-skip-tls-verify=true
         oc new-project ${NAMESPACE} || oc project ${NAMESPACE}
@@ -69,3 +69,12 @@ stages:
         ROUTE=$(oc get route ${APPNAME} -o jsonpath="{.spec.host}")
         echo "Check The APP Here: http://${ROUTE}"
       displayName: 'Publish APP'
+    - task: SnykSecurityScan@1
+      inputs:
+        serviceConnectionEndpoint: 'personal'
+        testType: 'container'
+        dockerImageName: 'image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${APPNAME}:${VERSION}'
+        severityThreshold: 'high'
+        monitorWhen: 'always'
+        failOnIssues: true
+      displayName: "Scan Image"
