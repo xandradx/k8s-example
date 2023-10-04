@@ -22,6 +22,7 @@ stages:
       displayName: 'Clone Repo'    
     - task: SnykSecurityScan@1
       inputs:
+        serviceConnectionEndpoint: 'personal'
         testType: 'app'
         targetFile: 'app/'
         severityThreshold: 'high'
