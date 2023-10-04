@@ -11,6 +11,16 @@ pool:
 
 
 stages:
+- stage: test
+  jobs:
+  - job: snyk
+    container: docker.io/snyk/snyk:ruby-2.5 
+    steps:
+    - script: |
+        export SNKYT_TOKEN
+        git clone https://gitlab.com/Fx62/pokemones.git app
+        snyk test app/
+      displayName: 'Clone Repo'
 - stage: build
   jobs:
   - job: node
@@ -25,7 +35,7 @@ stages:
         npm run build
       displayName: 'Build App'
     - publish: $(System.DefaultWorkingDirectory)/app/dist
-      artifact: dist
+      artifact: dist     
 - stage: deploy
   jobs:
   - job: openshift
