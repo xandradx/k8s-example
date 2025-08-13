@@ -5,7 +5,6 @@ resources:
 - k8s/02-deployment.yaml
 - k8s/03-service.yaml
 - k8s/04-ingress.yaml
-- k8s/05-seal-secret.yaml
 patches:
 - patch: |
     - op: replace
